@@ -229,7 +229,23 @@ int16_t QwDevISM330DHCX::getTemp()
 
     return tempVal;
 }
+//////////////////////////////////////////////////////////////////////////////
+// getStepCounter()
+//
+// Gets the step counter
+//
 
+uint16_t QwDevISM330DHCX::getStepCounter()
+{
+
+    uint16_t stepVal;
+    int32_t retVal = ism330dhcx_number_of_steps_get(&sfe_dev, &stepVal);
+
+    if (retVal != 0)
+        return -1;
+
+    return stepVal;
+}
 //////////////////////////////////////////////////////////////////////////////
 // getRawAccel()
 //
@@ -462,6 +478,25 @@ float QwDevISM330DHCX::convertToCelsius(int16_t data)
 //
 
 //////////////////////////////////////////////////////////////////////////////////
+// setStepCounterConfig()
+//
+//
+//  Parameter   Description
+//  ---------   -----------------------------
+//  enable      Enable the general step counter configuration
+
+bool QwDevISM330DHCX::setStepCounterConfig(bool enable)
+{
+    int32_t retVal;
+
+    retVal = ism330dhcx_pedo_sens_set(&sfe_dev, (uint8_t)enable);
+
+    if (retVal != 0)
+        return false;
+
+    return true;
+}
+//////////////////////////////////////////////////////////////////////////////////
 // setDeviceConfig()
 //
 //
@@ -500,6 +535,23 @@ bool QwDevISM330DHCX::deviceReset()
     return true;
 }
 
+//////////////////////////////////////////////////////////////////////////////////
+// stepCounterReset()
+//
+// Resets the step counter to 0
+//
+
+bool QwDevISM330DHCX::stepCounterReset()
+{
+    int32_t retVal;
+
+    retVal = ism330dhcx_steps_reset(&sfe_dev);
+
+    if (retVal != 0)
+        return false;
+
+    return true;
+}
 //////////////////////////////////////////////////////////////////////////////////
 // getDeviceReset()
 //

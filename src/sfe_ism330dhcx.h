@@ -85,13 +85,17 @@ class QwDevISM330DHCX
 
     uint8_t getUniqueId();
 
-    // Linear, Angular, and Temp Data retrieval
+    // Linear, Angular, Step counter and Temp Data retrieval
     int16_t getTemp();
+    uint16_t getStepCounter();
     bool getRawAccel(sfe_ism_raw_data_t *accelData);
     bool getRawGyro(sfe_ism_raw_data_t *gyroData);
     bool getAccel(sfe_ism_data_t *accelData);
     bool getGyro(sfe_ism_data_t *gyroData);
 
+    // General Step Counter Settings
+    bool setStepCounterConfig(bool enable = true);
+    bool stepCounterReset();
     // General Settings
     bool setDeviceConfig(bool enable = true);
     bool deviceReset();
